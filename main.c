@@ -2,42 +2,40 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define ROWS 10
-#define COLUMNS 10
+#define ROWS 15
+#define COLUMNS 15
 
-void gol_init(bool world[ROWS][COLUMNS]);
-void gol_print(bool world[ROWS][COLUMNS]);
-void gol_step(bool world[ROWS][COLUMNS], bool world_copy[ROWS][COLUMNS]);
-int gol_count_neighbors(bool world[ROWS][COLUMNS], int x, int y);
-bool gol_get_cell(bool world[ROWS][COLUMNS], int x, int y);
-void gol_copy(bool world[ROWS][COLUMNS], bool world_copy[ROWS][COLUMNS]);
+void gol_init(bool world[ROWS][COLUMNS][2], int);
+void gol_print(bool world[ROWS][COLUMNS][2], int);
+void gol_step(bool world[ROWS][COLUMNS][2], int);
+int gol_count_neighbors(bool world[ROWS][COLUMNS][2], int, int, int);
+bool gol_get_cell(bool world[ROWS][COLUMNS][2], int, int, int);
 
 int main()
 {
 	int i = 0;
-	// TODO: Declara dos mundos
-	bool world[ROWS][COLUMNS];
-	bool world_copy[ROWS][COLUMNS];
+	bool world[ROWS][COLUMNS][2];
 	// TODO: inicializa el mundo
-	gol_init(world);
+	gol_init(world, i+1);
 	
 	do {
 		printf("\033cIteration %d\n", i++);
 		// TODO: Imprime el mundo
-		gol_print(world);
+		gol_print(world, i%2);
 		// TODO: Itera
-		gol_step(world, world_copy);
+		gol_step(world, i%2);
 	} while (getchar() != 'q');
 
 	return EXIT_SUCCESS;
 }
 
-void gol_init(bool world[ROWS][COLUMNS])
+void gol_init(bool world[ROWS][COLUMNS][2], int z)
 {
 	// TODO: Poner el mundo a false
 	for (int i = 0; i < ROWS; i++){
 		for (int j = 0; j < COLUMNS; j++){
-			world[i][j] = 0;
+			world[i][j][0] = 0;
+			world[i][j][1] = 0;
 		}
 	}
 
@@ -47,21 +45,19 @@ void gol_init(bool world[ROWS][COLUMNS])
 	 *           # # #
 	 */
 	char glider[5][5] = {
-		{0, 0, 0, 0, 0},
-		{0, 0, 1, 0, 0},
-		{0, 0, 0, 1, 0},
-		{0, 1, 1, 1, 0},
-		{0, 0, 0, 0, 0},
+		{0, 1, 0},
+		{0, 0, 1},
+		{1, 1, 1},
 	};
 	
-	for (int i = 1; i < 4; i++) {
-		for (int j = 1; j < 4; j++) {
-			world[i][j] = glider[i][j];
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			world[i][j][z] = glider[i][j];
 		}
 	};
 }
 
-void gol_print(bool world[ROWS][COLUMNS])
+void gol_print(bool world[ROWS][COLUMNS][2], int z)
 {
 	// TODO: Imprimir el mundo por consola. Sugerencia:
 	/*
@@ -76,16 +72,16 @@ void gol_print(bool world[ROWS][COLUMNS])
 	 *     . . . . . . . . . .
 	 *     . . . . . . . . . .
 	 */
-	for (int i = 1; i < ROWS - 1; i++){
-		for (int j = 1; j < COLUMNS - 1; j++){
-			printf("%c ", world[i][j]? '#' : '.');
+	for (int i = 0; i < ROWS; i++){
+		for (int j = 0; j < COLUMNS; j++){
+			printf("%c ", world[i][j][z]? '#' : '.');
 		}
 		printf("\n");
 	}
 	printf("\n");
 }
 
-void gol_step(bool world[ROWS][COLUMNS], bool world_copy[ROWS][COLUMNS])
+void gol_step(bool world[ROWS][COLUMNS][2], int z)
 {
 	/*
 	 * TODO:
@@ -97,58 +93,46 @@ void gol_step(bool world[ROWS][COLUMNS], bool world_copy[ROWS][COLUMNS])
 	 *
 	 * - Copiar el mundo auxiliar sobre el mundo principal
 	 */
-	for (int i = 1; i < ROWS - 1; i++){
-		for (int j = 1; j < COLUMNS - 1; j++){
-			int neighbors = gol_count_neighbors(world, i, j);
-			if (world[i][j]) {
-				world_copy[i][j] = (neighbors == 3) || 
-						   (neighbors == 2);
+	for (int i = 0; i < ROWS; i++){
+		for (int j = 0; j < COLUMNS; j++){
+			int neighbors = gol_count_neighbors(world, i, j, z);
+			if (world[i][j][z]) {
+				world[i][j][!z] = (neighbors == 3) || 
+								  (neighbors == 2);
 			} else {
-				world_copy[i][j] = (neighbors == 3);
+				world[i][j][!z] = (neighbors == 3);
 			}
 		}
 	}
-	
-	gol_copy(world, world_copy);
 }
 
-int gol_count_neighbors(bool world[ROWS][COLUMNS], int x, int y)
+int gol_count_neighbors(bool world[ROWS][COLUMNS][2], int x, int y, int z)
 {
 	// Devuelve el número de vecinos
 	int neighbors = 0;
-	neighbors += gol_get_cell(world, x - 1, y - 1);
-	neighbors += gol_get_cell(world, x - 1, y + 0);
-	neighbors += gol_get_cell(world, x - 1, y + 1);
+	neighbors += gol_get_cell(world, x - 1, y - 1, z);
+	neighbors += gol_get_cell(world, x - 1, y + 0, z);
+	neighbors += gol_get_cell(world, x - 1, y + 1, z);
 				
-	neighbors += gol_get_cell(world, x + 0, y - 1);
-	neighbors += gol_get_cell(world, x + 0, y + 1);
+	neighbors += gol_get_cell(world, x + 0, y - 1, z);
+	neighbors += gol_get_cell(world, x + 0, y + 1, z);
 				
-	neighbors += gol_get_cell(world, x + 1, y - 1);
-	neighbors += gol_get_cell(world, x + 1, y + 0);
-	neighbors += gol_get_cell(world, x + 1, y + 1);
+	neighbors += gol_get_cell(world, x + 1, y - 1, z);
+	neighbors += gol_get_cell(world, x + 1, y + 0, z);
+	neighbors += gol_get_cell(world, x + 1, y + 1, z);
 	
 	return neighbors;
 }
 
-bool gol_get_cell(bool world[ROWS][COLUMNS], int x, int y)
+bool gol_get_cell(bool world[ROWS][COLUMNS][2], int x, int y, int z)
 {
 	/*
 	 * TODO: Devuelve el estado de la célula de posición indicada
 	 * (¡cuidado con los límites del array!)
 	 */
-	if ((x > (ROWS - 1)) || (y > (COLUMNS - 1))) {
-		return 0;
+	if ((x >= 0) && (x < ROWS) && (y >= 0) && (y < COLUMNS)) {
+		return world[x][y][z];
 	} else {
-		return world[x][y];
-	}
-}
-
-void gol_copy(bool world[ROWS][COLUMNS], bool world_copy[ROWS][COLUMNS])
-{
-	// TODO: copia el mundo segundo mundo sobre el primero
-	for (int i = 1; i < ROWS - 1; i++) {
-		for (int j = 1; j < COLUMNS - 1; j++) {
-			world[i][j] = world_copy[i][j];
-		}
+		return 0;	
 	}
 }
