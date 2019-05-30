@@ -44,7 +44,7 @@ void gol_init(bool world[ROWS][COLUMNS][2], int z)
 	 *           . . #
 	 *           # # #
 	 */
-	char glider[5][5] = {
+	char glider[3][3] = {
 		{0, 1, 0},
 		{0, 0, 1},
 		{1, 1, 1},
