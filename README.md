@@ -11,16 +11,20 @@ git clone https://github.com/Castam/jose_castanio.git
 ```
 ### Requisitos:
 
-Un compilador para C, en nuestro caso usamos gcc para comenzar.
+Un compilador para C y una máquina con Linux.
 
 ## Ejecuta el juego de la vida:
 
 ```
-gcc main.c -o main
-./main
+~$ make
+~$ ./gol
 ```
 
 El primer comando compila y el segundo ejecuta.
+
+## Funcionamiento:
+	- Presiona cualquier tecla para avanzar una iteración en el juego.
+	- Para finalizar el juego presiona la tecla ```q```.
 
 ## Autor:
 
