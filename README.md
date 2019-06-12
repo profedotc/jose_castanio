@@ -1,7 +1,5 @@
-Juego de la vida
-================
-
-# Repositorio del juego de la vida de Conway
+Juego de la vida de Conway
+==========================
 
 ## Para comenzar:
 
@@ -24,7 +22,7 @@ El primer comando compila y el segundo ejecuta.
 
 ## Funcionamiento:
 	- Presiona cualquier tecla para avanzar una iteración en el juego.
-	- Para finalizar el juego presiona la tecla ```q```.
+	- Para finalizar el juego presiona la tecla `q`.
 
 ## Autor:
 
