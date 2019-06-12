@@ -1,14 +1,15 @@
-#include <stdio.h>
-#include <stdbool.h>
 #include "gol.h"
 
-void gol_init(bool world[ROWS][COLUMNS][2], int z)
+#include <stdio.h>
+
+void gol_init(struct gol *gol)
 {
+	gol -> current_world = 0;
+	
 	// TODO: Poner el mundo a false
 	for (int i = 0; i < ROWS; i++){
 		for (int j = 0; j < COLUMNS; j++){
-			world[i][j][0] = 0;
-			world[i][j][1] = 0;
+			gol -> world[i][j][gol -> current_world] = 0;
 		}
 	}
 
@@ -25,12 +26,12 @@ void gol_init(bool world[ROWS][COLUMNS][2], int z)
 	
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
-			world[i][j][z] = glider[i][j];
+			gol -> world[i][j][gol -> current_world] = glider[i][j];
 		}
 	};
 }
 
-void gol_print(bool world[ROWS][COLUMNS][2], int z)
+void gol_print(struct gol *gol)
 {
 	// TODO: Imprimir el mundo por consola. Sugerencia:
 	/*
@@ -47,64 +48,54 @@ void gol_print(bool world[ROWS][COLUMNS][2], int z)
 	 */
 	for (int i = 0; i < ROWS; i++){
 		for (int j = 0; j < COLUMNS; j++){
-			printf("%c ", world[i][j][z]? '#' : '.');
+			printf("%c ", gol -> world[i][j][gol -> current_world]? 
+					'#' : '.');
 		}
 		printf("\n");
 	}
 	printf("\n");
 }
 
-void gol_step(bool world[ROWS][COLUMNS][2], int z)
+void gol_step(struct gol *gol)
 {
-	/*
-	 * TODO:
-	 * - Recorrer el mundo célula por célula comprobando si nace, sobrevive
-	 *   o muere.
-	 *
-	 * - No se puede cambiar el estado del mundo a la vez que se recorre:
-	 *   Usar un mundo auxiliar para guardar el siguiente estado.
-	 *
-	 * - Copiar el mundo auxiliar sobre el mundo principal
-	 */
 	for (int i = 0; i < ROWS; i++){
 		for (int j = 0; j < COLUMNS; j++){
-			int neighbors = gol_count_neighbors(world, i, j, z);
-			if (world[i][j][z]) {
-				world[i][j][!z] = (neighbors == 3) || 
-								  (neighbors == 2);
-			} else {
-				world[i][j][!z] = (neighbors == 3);
-			}
+			int neighbors = gol_count_neighbors(gol, i, j);
+			gol -> world[i][j][!gol -> current_world] =
+				(gol -> world[i][j][gol->current_world] &&
+				neighbors == 2) || neighbors == 3;
 		}
 	}
+	
+	gol -> current_world = !gol -> current_world;
 }
 
-int gol_count_neighbors(bool world[ROWS][COLUMNS][2], int x, int y, int z)
+int gol_count_neighbors(struct gol *gol, int x, int y)
 {
 	// Devuelve el número de vecinos
 	int neighbors = 0;
-	neighbors += gol_get_cell(world, x - 1, y - 1, z);
-	neighbors += gol_get_cell(world, x - 1, y + 0, z);
-	neighbors += gol_get_cell(world, x - 1, y + 1, z);
+	neighbors += gol_get_cell(gol, x - 1, y - 1);
+	neighbors += gol_get_cell(gol, x - 1, y + 0);
+	neighbors += gol_get_cell(gol, x - 1, y + 1);
 				
-	neighbors += gol_get_cell(world, x + 0, y - 1, z);
-	neighbors += gol_get_cell(world, x + 0, y + 1, z);
+	neighbors += gol_get_cell(gol, x + 0, y - 1);
+	neighbors += gol_get_cell(gol, x + 0, y + 1);
 				
-	neighbors += gol_get_cell(world, x + 1, y - 1, z);
-	neighbors += gol_get_cell(world, x + 1, y + 0, z);
-	neighbors += gol_get_cell(world, x + 1, y + 1, z);
+	neighbors += gol_get_cell(gol, x + 1, y - 1);
+	neighbors += gol_get_cell(gol, x + 1, y + 0);
+	neighbors += gol_get_cell(gol, x + 1, y + 1);
 	
 	return neighbors;
 }
 
-bool gol_get_cell(bool world[ROWS][COLUMNS][2], int x, int y, int z)
+bool gol_get_cell(struct gol *gol, int x, int y)
 {
 	/*
 	 * TODO: Devuelve el estado de la célula de posición indicada
 	 * (¡cuidado con los límites del array!)
 	 */
 	if ((x >= 0) && (x < ROWS) && (y >= 0) && (y < COLUMNS)) {
-		return world[x][y][z];
+		return gol -> world[x][y][gol -> current_world];
 	} else {
 		return 0;	
 	}

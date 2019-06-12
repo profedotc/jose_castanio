@@ -1,21 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+
 #include "gol.h"
 
 int main()
 {
 	int i = 0;
-	bool world[ROWS][COLUMNS][2];
-	// TODO: inicializa el mundo
-	gol_init(world, i+1);
+	struct gol gol;
+	
+	gol_init(&gol);
 	
 	do {
 		printf("\033cIteration %d\n", i++);
-		// TODO: Imprime el mundo
-		gol_print(world, i%2);
-		// TODO: Itera
-		gol_step(world, i%2);
+		gol_print(&gol); // Imprime el mundo
+		gol_step(&gol); // Itera
 	} while (getchar() != 'q');
 
 	return EXIT_SUCCESS;

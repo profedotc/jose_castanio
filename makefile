@@ -3,7 +3,7 @@
 all: gol
 
 gol: main.o gol.o
-	gcc main.o gol.o -o mi_prog
+	gcc main.o gol.o -o gol
 	
 main.o: main.c
 	gcc -c main.c
