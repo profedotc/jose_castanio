@@ -2,6 +2,10 @@
 
 #include <stdio.h>
 
+static bool get_cell(struct gol *gol, int x, int y);
+
+static int count_neighbors(struct gol *gol, int x, int y);
+
 void gol_init(struct gol *gol)
 {
 	gol -> current_world = 0;
@@ -70,7 +74,7 @@ void gol_step(struct gol *gol)
 	gol -> current_world = !gol -> current_world;
 }
 
-int gol_count_neighbors(struct gol *gol, int x, int y)
+static int count_neighbors(struct gol *gol, int x, int y)
 {
 	// Devuelve el número de vecinos
 	int neighbors = 0;
@@ -88,7 +92,7 @@ int gol_count_neighbors(struct gol *gol, int x, int y)
 	return neighbors;
 }
 
-bool gol_get_cell(struct gol *gol, int x, int y)
+static bool get_cell(struct gol *gol, int x, int y)
 {
 	/*
 	 * TODO: Devuelve el estado de la célula de posición indicada
