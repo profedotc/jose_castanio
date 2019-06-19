@@ -8,11 +8,11 @@
 
 struct gol{
 	bool world[ROWS][COLUMNS][2];
-	int current_world;
+	unsigned int current_world;
 };
 
 void gol_init(struct gol *gol);
-void gol_print(struct gol *gol);
+void gol_print(const struct gol *gol);
 void gol_step(struct gol *gol);
 
 #endif

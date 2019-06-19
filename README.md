@@ -1,17 +1,17 @@
-Juego de la vida de Conway
-==========================
+## Juego de la vida de Conway 
+![](https://d33wubrfki0l68.cloudfront.net/24b3b429ab6bb083a15135eb683707804f10dd03/c4db5/static/images/2012/glider.png)
 
-## Para comenzar:
+**Para comenzar:**
 
 Consigue tu propia copia de la siguiente forma:
 ```
 git clone https://github.com/Castam/jose_castanio.git
 ```
-### Requisitos:
+**Requisitos:**
 
 Un compilador para C y una máquina con Linux.
 
-## Ejecuta el juego de la vida:
+**Ejecuta el juego de la vida:**
 
 ```
 ~$ make
@@ -20,10 +20,12 @@ Un compilador para C y una máquina con Linux.
 
 El primer comando compila y el segundo ejecuta.
 
-## Funcionamiento:
-	- Presiona cualquier tecla para avanzar una iteración en el juego.
-	- Para finalizar el juego presiona la tecla `q`.
+**Funcionamiento:**
 
-## Autor:
+* Presiona cualquier tecla para avanzar una iteración en el juego.
 
-* **José Carlos Castaño Muñoz** - [Castam](https://github.com/Castam)
+* Para finalizar el juego presiona la tecla `q`.
+
+**Autor:**
+
+*José Carlos Castaño Muñoz* - [Castam](https://github.com/Castam)
