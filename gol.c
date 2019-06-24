@@ -64,7 +64,7 @@ void gol_step(struct gol *gol)
 {
 	for (int i = 0; i < ROWS; i++){
 		for (int j = 0; j < COLUMNS; j++){
-			int neighbors = gol_count_neighbors(gol, i, j);
+			int neighbors = count_neighbors(gol, i, j);
 			gol -> world[i][j][!gol -> current_world] =
 				(gol -> world[i][j][gol->current_world] &&
 				neighbors == 2) || neighbors == 3;
@@ -78,16 +78,16 @@ static int count_neighbors(const struct gol *gol, int x, int y)
 {
 	// Devuelve el número de vecinos
 	int neighbors = 0;
-	neighbors += gol_get_cell(gol, x - 1, y - 1);
-	neighbors += gol_get_cell(gol, x - 1, y + 0);
-	neighbors += gol_get_cell(gol, x - 1, y + 1);
+	neighbors += get_cell(gol, x - 1, y - 1);
+	neighbors += get_cell(gol, x - 1, y + 0);
+	neighbors += get_cell(gol, x - 1, y + 1);
 				
-	neighbors += gol_get_cell(gol, x + 0, y - 1);
-	neighbors += gol_get_cell(gol, x + 0, y + 1);
+	neighbors += get_cell(gol, x + 0, y - 1);
+	neighbors += get_cell(gol, x + 0, y + 1);
 				
-	neighbors += gol_get_cell(gol, x + 1, y - 1);
-	neighbors += gol_get_cell(gol, x + 1, y + 0);
-	neighbors += gol_get_cell(gol, x + 1, y + 1);
+	neighbors += get_cell(gol, x + 1, y - 1);
+	neighbors += get_cell(gol, x + 1, y + 0);
+	neighbors += get_cell(gol, x + 1, y + 1);
 	
 	return neighbors;
 }
