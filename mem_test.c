@@ -3,8 +3,6 @@
 #include "gol.h"
 
 #define ITER 1000
-#define ROWS 15
-#define COLUMNS 15
 
 int main ()
 {
@@ -14,10 +12,10 @@ int main ()
     gol_init(&gol, ROWS, COLUMNS);
     
     for (int i = 0; i < ITER; i++) {
-            gol_step(&gol, ROWS, COLUMNS);
+            gol_step(&gol);
     }
     
-    gol_free(&gol, COLUMNS);
+    gol_free(&gol);
         
     return EXIT_SUCCESS;
 }

@@ -26,7 +26,7 @@ main.o: main.c gol.h
 gol.o: gol.c gol.h
 	$(CC) -c gol.c
 	
-mem_test.o: gol.c gol.h
+mem_test.o: mem_test.c
 	$(CC) -c mem_test.c
 	
 run: gol

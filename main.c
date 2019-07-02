@@ -9,15 +9,15 @@ int main()
 	struct gol gol;
 	
 	gol_alloc(&gol, ROWS, COLUMNS);
-	gol_init(&gol, ROWS, COLUMNS);
+	gol_init(&gol);
 	
 	do {
 		printf("\033cIteration %d\n", i++);
-		gol_print(&gol, ROWS, COLUMNS); // Imprime el mundo
-		gol_step(&gol, ROWS, COLUMNS); // Itera
+		gol_print(&gol); // Imprime el mundo
+		gol_step(&gol); // Itera
 	} while (getchar() != 'q');
 
-	gol_free(&gol, COLUMNS);
+	gol_free(&gol);
 
 	return EXIT_SUCCESS;
 }
