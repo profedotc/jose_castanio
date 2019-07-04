@@ -3,6 +3,9 @@
 
 #include "gol.h"
 
+#define ROWS 15
+#define COLUMNS 20
+
 int main()
 {
 	int i = 0;

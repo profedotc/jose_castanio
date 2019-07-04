@@ -3,9 +3,6 @@
 
 #include <stdbool.h>
 
-#define ROWS 15
-#define COLUMNS 20
-
 struct gol{
 	bool *worlds[2];
 	int n_rows;

@@ -12,7 +12,7 @@ release : CFLAGS += -O3
 release : gol
 
 test: CFLAGS += -g -O0
-test: mem_test valgrind
+test: valgrind
 
 gol: main.o gol.o
 	$(CC) main.o gol.o -o gol
