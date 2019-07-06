@@ -8,8 +8,8 @@ int main ()
 {
     struct gol gol;
     
-    gol_alloc(&gol, ROWS, COLUMNS);
-    gol_init(&gol, ROWS, COLUMNS);
+    gol_alloc(&gol, 15, 20);
+    gol_init(&gol);
     
     for (int i = 0; i < ITER; i++) {
             gol_step(&gol);
