@@ -35,7 +35,7 @@ run: gol
 clean:
 	rm *.o
 	rm gol
-	mem_test
+	rm mem_test
 	
 valgrind: mem_test
 	valgrind --leak-check=full --track-origins=yes ./mem_test
