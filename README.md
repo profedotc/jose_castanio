@@ -3,7 +3,7 @@
 
 **Para comenzar:**
 
-Consigue tu propia copia de la siguiente forma:
+Consigue tu propia copia del directorio de la siguiente forma:
 ```
 git clone https://github.com/Castam/jose_castanio.git
 ```
@@ -12,6 +12,7 @@ git clone https://github.com/Castam/jose_castanio.git
 Un compilador para C y una máquina con Linux.
 
 **Ejecuta el juego de la vida:**
+Abre la terminal con la carpeta del directorio y ejecuta las siguientes órdenes:
 
 ```
 ~$ make
