@@ -125,12 +125,8 @@ static bool get_cell(const struct gol *gol, enum state s, int x, int y)
 	 * TODO: Devuelve el estado de la célula de posición indicada
 	 * (¡cuidado con los límites del array!)
 	 */
-	if ((x >= 0) && (x < gol -> n_rows) && (y >= 0) && (y < gol -> n_columns)) {
-		fix_coords(gol, &x, &y);
-		return gol -> worlds[s][x * gol -> n_columns + y];
-	} else {
-		return 0;
-	}
+	fix_coords(gol, &x, &y);
+	return gol -> worlds[s][x * gol -> n_columns + y];
 }
 
 static void set_cell(struct gol *gol, enum state s, int x, int y, bool alive){
